@@ -1,0 +1,37 @@
+1. 安装完git后，在C:\Users\Administrator文件夹下找到.gitconfig文件，记事本打开添加以下：
+
+[init]
+	defaultBranch = main
+
+
+2. 在项目文件夹下鼠标右击选择Git Bash Here
+
+3. 创建本地项目的名字和邮箱，在Git Bash命令行里输入
+git config user.name "jiangchufeng"
+git config user.email "jiangchufengjcf@163.com"
+
+4. 登陆到gitlab找到仓库“Clone”标记，复制远程仓库地址
+
+https://github.com/jiangchufeng/Conversion-Final-Project-Spring-Boot-Online-Shopping-Website.git
+
+5. 在Git Bash命令行里依次输入
+
+git remote add origin https://github.com/jiangchufeng/Conversion-Final-Project-Spring-Boot-Online-Shopping-Website.git
+
+git add .
+
+git commit -m "随便写点儿东西用于记录"
+
+git push origin main
+
+结束
+
+中间错误最后出现 ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://git-teaching.cs.bham.ac.uk/mod-msc-proj-2021/cxj
+164.git'的处理方法
+
+git pull --rebase origin main
+
+
+
+
