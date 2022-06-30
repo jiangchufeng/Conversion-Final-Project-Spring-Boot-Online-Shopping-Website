@@ -20,7 +20,7 @@ git remote add origin https://github.com/jiangchufeng/Conversion-Final-Project-S
 
 git add .
 
-git commit -m "随便写点儿东西用于记录"
+git commit -m "Proposal and project specification"
 
 git push origin main
 
