@@ -7,20 +7,20 @@
 2. 在项目文件夹下鼠标右击选择Git Bash Here
 
 3. 创建本地项目的名字和邮箱，在Git Bash命令行里输入
-git config user.name "jiangchufeng"
-git config user.email "jiangchufengjcf@163.com"
+git config user.name "gitlab账号--邮箱前缀"
+git config user.email "cxxxxxx@cs.bham.ac.uk"
 
 4. 登陆到gitlab找到仓库“Clone”标记，复制远程仓库地址
 
-https://github.com/jiangchufeng/Conversion-Final-Project-Spring-Boot-Online-Shopping-Website.git
+https://git-teaching.cs.bham.ac.uk/mod-msc-proj-2021/cxj164.git
 
 5. 在Git Bash命令行里依次输入
 
-git remote add origin https://github.com/jiangchufeng/Conversion-Final-Project-Spring-Boot-Online-Shopping-Website.git
+git remote add origin https://git-teaching.cs.bham.ac.uk/mod-msc-proj-2021/cxj164.git
 
 git add .
 
-git commit -m "Proposal and project specification"
+git commit -m "随便写点儿东西用于记录"
 
 git push origin main
 
