@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * @BelongsPackage: com.dushop.common.entity
  * @Author: Jiang Chufeng
  * @CreateTime: 2022-07-10  00:50
- * @Description: TODO
+ * @Description: Backend Admin Role Entity. Set the dushopdb-roles attributes.
  * @Version: 1.0
  */
 

@@ -3,6 +3,7 @@ package com.dushop.admin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 /*
  * @BelongsProject: DuShopProject
@@ -13,7 +14,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  * @Version: 1.0
  */
 
-@SpringBootApplication
+
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })//加上它就解决了
 @EntityScan({"com.dushop.common.entity"})
 public class DuShopBackEndApplication {
 

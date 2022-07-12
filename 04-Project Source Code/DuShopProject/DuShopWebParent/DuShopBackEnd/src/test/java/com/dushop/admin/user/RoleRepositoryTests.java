@@ -38,19 +38,20 @@ public class RoleRepositoryTests {
 		assertThat(savedRole.getId()).isGreaterThan(0);
 	}
 
-
+/*
+ * @description: Dynamic Create records in the database table - roles
+ * @author: Jiang Chufeng
+ * @date: 2022/7/10 13:23
+ * @param:
+ * @return: void
+ */
 	@Test
 	public void testCreateRestRoles() {
-		Role roleSalesperson = new Role("Salesperson", "manage product price, "
-				+ "customers, shipping, orders and sales report");
-		
-		Role roleShipper = new Role("Shipper", "view products, view orders "
-				+ "and update order status");
-		
-		//Role roleAssistant = new Role("Assistant", "manage questions and reviews");
-		//Role roleEditor = new Role("Editor", "manage categories, brands, products, articles and menus");
-		
-		//repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));
-		repo.saveAll(List.of(roleSalesperson, roleShipper));
+		Role roleSalesperson = new Role("Salesperson", "manage selling price, orders, customers, shipping and sales report");
+		Role roleShipper = new Role("Shipper", "view products,  orders and update order status");
+		Role roleAssistant = new Role("Assistant", "manage questions and reviews");
+		Role roleEditor = new Role("Editor", "manage categories, brands, products, articles and menus");
+
+		repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));
 	}
 }
