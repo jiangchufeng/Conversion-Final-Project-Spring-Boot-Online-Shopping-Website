@@ -9,6 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.dushop.admin.paging.PagingAndSortingHelper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import com.dushop.common.entity.Role;
 import com.dushop.common.entity.User;
 import org.springframework.ui.Model;
@@ -40,11 +43,33 @@ public class UserService {
         return (List<User>) userRepo.findAll();
     }
 
+    /*
+     * @description:
+     * @author: Jiang Chufeng
+     * @date: 2022/7/13 18:33
+     * @param: pageNum
+     * @param: sortField Admin-Manage User-sorting
+     * @param: sortDir
+     * @return: org.springframework.data.domain.Page<com.dushop.common.entity.User>
+     */
+
+    public Page<User> listByPage(int pageNum, String sortField, String sortDir) {
+        Sort sort = Sort.by(sortField);
+
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
+
+        return userRepo.findAll(pageable);
+    }
+
+
+
     public List<Role> listRoles() {
         return (List<Role>) roleRepo.findAll();
     }
 
-    public void save(User user) {
+    public User save(User user) {
 
         boolean isUpdatingUser = (user.getId() != null);
 
@@ -61,7 +86,7 @@ public class UserService {
         }
 
         encodePassword(user);
-        userRepo.save(user);
+        return userRepo.save(user);
     }
 
     private void encodePassword(User user) {
@@ -101,6 +126,10 @@ public class UserService {
             throw new UserNotFoundException("Could not find any user with ID " + id);
         }
         userRepo.deleteById(id);
+    }
+
+    public void updateUserEnabledStatus(Integer id, boolean enabled) {
+        userRepo.updateEnabledStatus(id, enabled);
     }
 
 }
