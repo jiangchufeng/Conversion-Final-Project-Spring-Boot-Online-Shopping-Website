@@ -46,19 +46,23 @@ public class UserService {
     /*
      * @description:
      * @author: Jiang Chufeng
-     * @date: 2022/7/13 18:33
+     * @date: 2022/7/14 11:34
      * @param: pageNum
-     * @param: sortField Admin-Manage User-sorting
-     * @param: sortDir
+     * @param: sortField: Sorting according to which column in "manage users" form of Control panel
+     * @param: sortDir: asc-up; dsc-down
+     * @param: keyword: search users by keywords
      * @return: org.springframework.data.domain.Page<com.dushop.common.entity.User>
      */
-
-    public Page<User> listByPage(int pageNum, String sortField, String sortDir) {
+    public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
         Sort sort = Sort.by(sortField);
 
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 
         Pageable pageable = PageRequest.of(pageNum - 1, USERS_PER_PAGE, sort);
+
+        if (keyword != null) {
+            return userRepo.findAll(keyword, pageable);
+        }
 
         return userRepo.findAll(pageable);
     }

@@ -25,13 +25,12 @@ public interface UserRepository extends PagingAndSortingRepository<User, Integer
 
     public Long countById(Integer id);  // This method follows the convention specified by Spring Data JPA, so we don't have to specify any SQL statement, any query and pass the parameter id here..
 
+    @Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ',"
+            + " u.lastName) LIKE %?1%")
+    public Page<User> findAll(String keyword, Pageable pageable);
+
     @Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")
     @Modifying
     public void updateEnabledStatus(Integer id, boolean enabled);
 
-    /*
-    @Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ',"
-            + " u.lastName) LIKE %?1%")
-    public Page<User> findAll(String keyword, Pageable pageable);
-    */
 }
