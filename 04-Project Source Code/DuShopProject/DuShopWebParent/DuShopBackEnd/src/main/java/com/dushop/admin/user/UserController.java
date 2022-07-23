@@ -117,8 +117,24 @@ public class UserController {
 
         redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
 
-        return "redirect:/users";
+        //Return to page 1 after edit information
+        //return "redirect:/users";
+        return getRedirectURLtoAffectedUser(user);
     }
+
+    /*
+     * @description: Keep the user only affected  stay in the front of  the screen, the filter catch the name auto
+     * @author: Jiang Chufeng
+     * @date: 2022/7/16 22:25
+     * @param: user
+     * @return: java.lang.String
+     */
+    private String getRedirectURLtoAffectedUser(User user) {
+        String firstPartOfEmail = user.getEmail().split("@")[0];
+        return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
+    }
+
+
 
 
     @GetMapping("/users/edit/{id}")
@@ -157,6 +173,29 @@ public class UserController {
         redirectAttributes.addFlashAttribute("message", message);
 
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+        UserCsvExporter exporter = new UserCsvExporter();
+        exporter.export(listUsers, response);
+    }
+
+    @GetMapping("/users/export/excel")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+
+        UserExcelExporter exporter = new UserExcelExporter();
+        exporter.export(listUsers, response);
+    }
+
+    @GetMapping("/users/export/pdf")
+    public void exportToPDF(HttpServletResponse response) throws IOException {
+        List<User> listUsers = service.listAll();
+
+        UserPdfExporter exporter = new UserPdfExporter();
+        exporter.export(listUsers, response);
     }
 }
 

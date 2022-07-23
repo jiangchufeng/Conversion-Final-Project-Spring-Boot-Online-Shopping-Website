@@ -2,3 +2,26 @@
 *.icon-silver {color: silver}
 *.icon-green {color: green}
 *.icon-dark {color: gray}
+
+/* https://www.w3schools.com/css/css_rwd_mediaqueries.asp
+    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+ */
+
+/* small */
+@media screen and (max-width: 768px) {
+    div.full-details { display: none }
+    div.less-details { display: block; }
+}
+
+/* medium */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    div.full-details { display: block; }
+    div.less-details { display: none; }
+    .hideable-column { display: none }
+}
+
+/* Big */
+@media screen and (min-width: 1024px) {
+    div.less-details { display: none; }
+    .hideable-column { display: table-cell; }
+}

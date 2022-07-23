@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *@BelongsPackage: com.dushop.admin.security
  *@Author: Jiang Chufeng
  *@CreateTime: 2022-07-12  11:00
- *@Description: TODO
+ *@Description: TODO https://www.jianshu.com/p/e4ba1c196c59
  *@Version: 1.0
  */
 
@@ -26,12 +26,55 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
+    public UserDetailsService userDetailsService() {
+        return new DuShopUserDetailsService();
+    }
+
+    /*https://www.programcreek.com/java-api-examples/?api=org.springframework.security.authentication.dao.DaoAuthenticationProvider
+        Example #6
+         */
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure (HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests().anyRequest().permitAll();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
     }
+
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        /*http.authorizeRequests().anyRequest().permitAll();*/
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("email")
+                .permitAll()
+                .and().logout().permitAll();
+    }
+
+    /* In Spring Security 5.4 we also introduced the WebSecurityCustomizer.
+    The WebSecurityCustomizer is a callback interface that can be used to customize WebSecurity.
+    Below is an example configuration using the WebSecurityConfigurerAdapter that ignores requests
+    that match /ignore1 or /ignore2:
+    https://www.baeldung.com/spring-security-expressions
+    */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
+    }
+
 }

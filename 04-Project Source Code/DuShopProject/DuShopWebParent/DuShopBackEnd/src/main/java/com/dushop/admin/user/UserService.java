@@ -40,7 +40,7 @@ public class UserService {
 
 
     public List<User> listAll() {
-        return (List<User>) userRepo.findAll();
+        return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
     }
 
     /*
@@ -77,7 +77,7 @@ public class UserService {
 
         boolean isUpdatingUser = (user.getId() != null);
 
-        if (isUpdatingUser) {
+       /* if (isUpdatingUser) {
             User existingUser = userRepo.findById(user.getId()).get();
             if (user.getPassword().isEmpty()) {
                 user.setPassword(existingUser.getPassword());
@@ -90,6 +90,22 @@ public class UserService {
         }
 
         encodePassword(user);
+       // Bug Here：encode twice and decode one time,
+       //therefore I cannot log in the users list page.
+        */
+        if (isUpdatingUser) {
+            User existingUser = userRepo.findById(user.getId()).get();
+            if (user.getPassword().isEmpty()) {
+                user.setPassword(existingUser.getPassword());
+
+            } else {
+                encodePassword(user);
+
+            }
+
+        } else {
+            encodePassword(user);
+        }
         return userRepo.save(user);
     }
 
