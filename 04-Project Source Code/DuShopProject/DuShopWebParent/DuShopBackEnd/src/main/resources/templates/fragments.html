@@ -1,9 +1,33 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org">
+<head th:fragment="page_head(title)">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+
+    <!--making the head reusable, chage the page title by param when calling this fragments files-->
+    <title>[[${title}]]</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
 </head>
 <body>
+
+<!--Common for page footer-->
+<div th:fragment="footer" class = "text-center" style="font-style: italic" >
+    Du Shop - Control Panel &nbsp; Copyright &copy; DuShop &nbsp;&nbsp;
+    <a class="fas fa-user fa-1x icon-silver  right"></a>
+    <a sec:authentication="principal.fullname"></a>
+    <a class = "quit_item" id="logoutLink1" href="">Logout</a>
+     </div>
+
+
+</div>
+
 <!--Common methd, making the Manage User - table frame's codes simplicity-->
 <th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
     <a class="text-white"
@@ -11,7 +35,7 @@
         [[${columnLabel}]]
     </a>
     <span th:if="${sortField == fieldName}"
-          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>
+          th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 </th>
 
 <a th:fragment="page_link(pageNum, label)"
@@ -21,7 +45,7 @@
 <div th:fragment="user_photos" th:remove="tag">
     <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
     <img th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-         style="width: 100px" />
+         style="width: 100px"/>
 </div>
 
 <!--Delete template

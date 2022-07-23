@@ -63,7 +63,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("email")
                 .permitAll()
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and()
+                        .rememberMe()
+                        .key("keyforpersistentconnect_15649873484")
+                        .tokenValiditySeconds(2* 7 * 24 *3600); // keep for 2 weeks
     }
 
     /* In Spring Security 5.4 we also introduced the WebSecurityCustomizer.

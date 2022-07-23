@@ -25,3 +25,16 @@
     div.less-details { display: none; }
     .hideable-column { display: table-cell; }
 }
+
+.quit_item {
+    /* display: block; */
+    width: 100%;
+    padding: 0.00rem 0.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}

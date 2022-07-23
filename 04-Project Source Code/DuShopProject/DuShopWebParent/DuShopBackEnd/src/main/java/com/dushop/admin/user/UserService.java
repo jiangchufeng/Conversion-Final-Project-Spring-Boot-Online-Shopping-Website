@@ -2,6 +2,7 @@ package com.dushop.admin.user;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class UserService {
 
     public List<User> listAll() {
         return (List<User>) userRepo.findAll(Sort.by("firstName").ascending());
+    }
+
+    public User getByEmail(String email) {
+        return userRepo.getUserByEmail(email);
     }
 
     /*
@@ -152,5 +157,22 @@ public class UserService {
         userRepo.updateEnabledStatus(id, enabled);
     }
 
+    public User updateAccount(User userInEditForm) {
+        User userInDatabase = userRepo.findById(userInEditForm.getId()).get();
+
+        if (!userInEditForm.getPassword().isEmpty()) {
+            userInDatabase.setPassword(userInEditForm.getPassword());
+            encodePassword(userInDatabase);
+        }
+
+        if (userInEditForm.getPhotos() != null) {
+            userInDatabase.setPhotos(userInEditForm.getPhotos());
+        }
+
+        userInDatabase.setFirstName(userInEditForm.getFirstName());
+        userInDatabase.setLastName(userInEditForm.getLastName());
+
+        return userRepo.save(userInDatabase);
+    }
 }
 
