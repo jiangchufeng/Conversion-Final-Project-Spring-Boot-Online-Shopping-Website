@@ -1,12 +1,8 @@
 package com.dushop.admin.user.export;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import com.dushop.admin.user.AbstractExporter;
 import com.dushop.common.entity.User;
 import javax.servlet.http.HttpServletResponse;
 import org.supercsv.io.CsvBeanWriter;
